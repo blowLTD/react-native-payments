@@ -21,9 +21,9 @@ CGFloat const DEFAULT_CORNER_RADIUS = 4.0;
 
 - (instancetype) init {
   self = [super init];
-  
+
   [self setButtonType:DEFAULT_BUTTON_TYPE andStyle:DEFAULT_BUTTON_STYLE withRadius:DEFAULT_CORNER_RADIUS];
-  
+
   return self;
 }
 
@@ -31,7 +31,7 @@ CGFloat const DEFAULT_CORNER_RADIUS = 4.0;
   if (_buttonType != value) {
     [self setButtonType:value andStyle:_buttonStyle withRadius:_cornerRadius];
   }
-  
+
   _buttonType = value;
 }
 
@@ -39,7 +39,7 @@ CGFloat const DEFAULT_CORNER_RADIUS = 4.0;
   if (_buttonStyle != value) {
     [self setButtonType:_buttonType andStyle:value withRadius:_cornerRadius];
   }
-  
+
   _buttonStyle = value;
 }
 
@@ -47,7 +47,7 @@ CGFloat const DEFAULT_CORNER_RADIUS = 4.0;
   if(_cornerRadius != value) {
     [self setButtonType:_buttonType andStyle:_buttonStyle withRadius:value];
   }
-  
+
   _cornerRadius = value;
 }
 
@@ -63,14 +63,20 @@ CGFloat const DEFAULT_CORNER_RADIUS = 4.0;
 
   PKPaymentButtonType type;
   PKPaymentButtonStyle style;
-  
+
   if ([buttonType isEqualToString: @"buy"]) {
     type = PKPaymentButtonTypeBuy;
   } else if ([buttonType isEqualToString: @"setUp"]) {
     type = PKPaymentButtonTypeSetUp;
   } else if ([buttonType isEqualToString: @"inStore"]) {
     type = PKPaymentButtonTypeInStore;
-  } else if ([buttonType isEqualToString: @"donate"]) {
+  } else if ([buttonType isEqualToString: @"book"]) {
+      if (@available(iOS 12.0, *)) {
+          type = PKPaymentButtonTypeBook;
+      } else {
+          type = PKPaymentButtonTypePlain;
+      }
+  }else if ([buttonType isEqualToString: @"donate"]) {
     type = PKPaymentButtonTypeDonate;
   } else {
     type = PKPaymentButtonTypePlain;
@@ -89,7 +95,7 @@ CGFloat const DEFAULT_CORNER_RADIUS = 4.0;
 
   _button.layer.cornerRadius = cornerRadius;
   _button.layer.masksToBounds = true;
-  
+
   _button.layer.cornerRadius = cornerRadius;
   _button.layer.masksToBounds = true;
 

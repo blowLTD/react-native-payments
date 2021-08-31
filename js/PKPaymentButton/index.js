@@ -6,6 +6,8 @@ import { NativeModules, requireNativeComponent } from 'react-native';
 type PKPaymentButtonType =
   // A button with the Apple Pay logo only.
   | 'plain'
+  // A button with the text “Book with” and the Apple Pay logo.
+  | 'book'
   // A button with the text “Buy with” and the Apple Pay logo.
   | 'buy'
   // A button prompting the user to set up a card.

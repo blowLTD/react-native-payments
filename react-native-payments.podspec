@@ -2,7 +2,7 @@ require 'json'
 pkg = JSON.parse(File.read("package.json"))
 
 Pod::Spec.new do |s|
-  s.name             = "ReactNativePayments"
+  s.name             = 'ReactNativePayments'
   s.version          = pkg["version"]
   s.summary          = pkg["description"]
   s.requires_arc     = true

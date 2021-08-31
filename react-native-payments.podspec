@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.license          = pkg["license"]
   s.homepage         = pkg["homepage"]
   s.author           = pkg["author"]
-  s.source           = { :git => "https://github.com/blowltd/react-native-payments.git", :tag => "#{s.version}" }
+  s.source           = { :git => "https://github.com/blowltd/react-native-payments.git", :tag => "v#{s.version}" }
   s.source_files     = 'ios/**/*.{h,m}'
   s.platform         = :ios, "8.0"
   s.requires_arc     = true

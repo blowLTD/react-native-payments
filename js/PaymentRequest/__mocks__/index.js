@@ -1,17 +1,17 @@
 const mockReactNativeIOS = {
   Platform: {
-    OS: 'ios'
+    OS: 'ios',
   },
   DeviceEventEmitter: {
     removeSubscription: () => {},
-    addListener: () => {}
-  }
+    addListener: () => {},
+  },
 };
 
 const mockReactNativeAndroid = Object.assign({}, mockReactNativeIOS, {
   Platform: {
-    OS: 'android'
-  }
+    OS: 'android',
+  },
 });
 
 const mockNativePaymentsSupportedIOS = {

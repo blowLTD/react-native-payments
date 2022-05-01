@@ -1,0 +1,59 @@
+name: release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['14.16.1']
+    container: blowltd/docker-ci:node-${{ matrix.node }}
+    env:
+      CI: true
+      TOKEN_GITHUB_CI: ${{ secrets.TOKEN_GITHUB_CI }}
+    steps:
+    - uses: actions/checkout@v1
+    - name: npm ci
+      run: |
+        echo "//npm.pkg.github.com/:_authToken=${TOKEN_GITHUB_CI}" >> .npmrc
+        echo "@blowltd:registry=https://npm.pkg.github.com" >> .npmrc
+        echo "always-auth=true" >> .npmrc
+        npm ci
+    - name: build
+      run: npm run build
+    - name: package
+      run: | 
+        file=$(npm pack)
+        tar -xzvf $file
+    - name: upload
+      uses: actions/upload-artifact@v1
+      with:
+        name: ${{ github.sha }}
+        path: ./package
+
+  github-publish:
+    runs-on: ubuntu-latest
+    needs: build
+    strategy:
+      matrix:
+        node: ['14.16.1']
+    container: blowltd/docker-ci:node-${{ matrix.node }}
+    env:
+      CI: true
+      TOKEN_GITHUB_CI: ${{ secrets.TOKEN_GITHUB_CI }}
+    steps:
+      - name: download
+        uses: actions/download-artifact@v1
+        with:
+          name: ${{ github.sha }}
+          path: ./package
+      - name: publish
+        working-directory: ./package
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${TOKEN_GITHUB_CI}" > .npmrc
+          echo "@blowltd:registry=https://npm.pkg.github.com" >> .npmrc
+          echo "always-auth=true" >> .npmrc
+          npm publish

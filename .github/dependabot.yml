@@ -1,0 +1,28 @@
+version: 2
+registries:
+  npm-registry-registry-npmjs-org:
+    type: npm-registry
+    url: https://registry.npmjs.org
+    token: "${{secrets.NPM_REGISTRY_REGISTRY_NPMJS_ORG_TOKEN}}"
+
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: weekly
+    time: "10:00"
+    timezone: Europe/London
+  open-pull-requests-limit: 10
+  target-branch: develop
+  ignore:
+  - dependency-name: "@babel/preset-flow"
+    versions:
+    - "> 7.0.0"
+  - dependency-name: eslint
+    versions:
+    - "> 6.6.0"
+  - dependency-name: eslint-plugin-flowtype
+    versions:
+    - "> 4.3.0"
+  registries:
+  - npm-registry-registry-npmjs-org
